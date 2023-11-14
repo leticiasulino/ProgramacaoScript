@@ -1,0 +1,55 @@
+package br.edu.fatecfranca.clientedb.controller;
+
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import br.edu.fatecfranca.clientedb.model.dto.ClienteDto;
+import br.edu.fatecfranca.clientedb.service.ClienteService;
+
+@RestController // classe vai responder pelas requisições
+@RequestMapping("/cliente") 
+public class ClienteController {
+	
+	// de CRUD da classe Cliente
+
+	@Autowired
+	ClienteService servico;
+	
+	// consulta no banco de dados é sempre o verbo GET
+	@GetMapping 
+	public List<ClienteDto> getClientes(){
+		return servico.getClientes();
+	}
+	
+	// consulta no banco de dados por um produto em específico
+	@GetMapping("/{id}")
+	public ClienteDto getCliente(@PathVariable Long id) {
+		ClienteDto prod = servico.getCliente(id);
+		return prod;
+	}
+
+	@PostMapping
+	public ClienteDto addProduto(@RequestBody ClienteDto clienteDto) {
+		return servico.addCliente(clienteDto);
+	}
+	
+	// remove do banco de dados é sempre o verbo DELETE
+	@DeleteMapping("/{id}")
+	public String removeCliente(@PathVariable Long id) {
+		return servico.removeCliente(id);
+	}
+	
+	// atualiza no banco de dados é sempre com PUT
+	@PutMapping()
+	public ClienteDto updateCliente(@RequestBody ClienteDto clienteDto) {
+		return servico.updateCliente(clienteDto);
+	}
+}

@@ -1,0 +1,5 @@
+package br.edu.fatecfranca.rotas;
+
+public class RotasController {
+
+}
